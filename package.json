@@ -1,0 +1,48 @@
+{
+  "name": "toast-easy-prismic-react",
+  "version": "1.0.3",
+  "description": "Render and fetch prismic data with ease ",
+  "main": "./dist/src/index.js",
+  "scripts": {
+    "build": "tsc",
+    "build:watch": "tsc --watch",
+    "format": "prettier --write ./**/**/*.{tsx,ts} && eslint -c .eslintrc.js --fix --ext .tsx,.ts .",
+    "lint": "eslint -c .eslintrc.js --ext .tsx,.ts .",
+    "test": "echo \"Error: no test specified\" && exit 0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/easyblueio/easy-prismic-react.git"
+  },
+  "keywords": [
+    "prismic",
+    "react",
+    "reactjs",
+    "api",
+    "easyblue",
+    "easy"
+  ],
+  "author": "easyblue.io",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/easyblueio/easy-prismic-react/issues"
+  },
+  "homepage": "https://github.com/easyblueio/easy-prismic-react#readme",
+  "devDependencies": {
+    "@types/jest": "^25.2.1",
+    "@types/react": "^16.9.34",
+    "@typescript-eslint/eslint-plugin": "^2.28.0",
+    "@typescript-eslint/parser": "^2.28.0",
+    "conditional-type-checks": "^1.0.5",
+    "dtslint": "^3.4.1",
+    "eslint": "^6.8.0",
+    "eslint-plugin-react": "^7.19.0",
+    "jest": "^25.3.0",
+    "prettier": "^2.0.4",
+    "typescript": "^3.8.3"
+  },
+  "dependencies": {
+    "prismic-javascript": "^2.7.1",
+    "prismic-richtext": "^1.0.3"
+  }
+}

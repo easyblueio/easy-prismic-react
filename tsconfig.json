@@ -1,0 +1,21 @@
+{
+  "compilerOptions": {
+    "module": "commonjs",
+    "esModuleInterop": true,
+    "noImplicitAny": false,
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+    "target": "es6",
+    "sourceMap": false,
+    "outDir": "dist",
+    "types": ["jest"],
+    "typeRoots": [
+      "./typings",
+      "node_modules/@types"
+    ]
+  },
+  "lib": ["es2015"],
+  "exclude": [
+    "node_modules"
+  ]
+}
