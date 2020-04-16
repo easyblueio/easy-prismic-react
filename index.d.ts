@@ -4,6 +4,6 @@
 // Definitions: https://github.com/DefinitelyTyped/DefinitelyTyped
 // TypeScript Version: 3.8.3
 
-declare module 'easy-prismic-react' {
-
-}
+export * from './src/index';
+export * from './src/html';
+export * from './typings/prismic';
