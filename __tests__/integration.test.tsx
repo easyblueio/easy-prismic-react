@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom/server';
 import { PrismicAPIWrapper, PrismicHTMLSerializer } from '../src';
 import { BlogPost, ENDPOINT, TContentTypes } from './apiWrapper.test';
-import { hrefResolver, linkResolver } from './serializer.test';
+import { linkResolver } from './serializer.test';
 
 describe('Integration tests', () => {
   it('Should fetch blog post by UID then serialize it', async () => {
@@ -14,7 +14,7 @@ describe('Integration tests', () => {
     );
     const data = blogPost?.results[0]?.data;
 
-    const serializer = new PrismicHTMLSerializer({ hrefResolver, linkResolver });
+    const serializer = new PrismicHTMLSerializer({ linkResolver });
     const serialized = ReactDOM.renderToString(serializer.renderRichText(data.rich_text));
     const expected = ReactDOM.renderToString(
       <>

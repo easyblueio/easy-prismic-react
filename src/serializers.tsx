@@ -1,6 +1,7 @@
 import React, { createElement } from 'react';
+import { PrismicLink } from '../typings/prismic';
 
-function url(linkResolver, link): string {
+export function url(linkResolver, link: PrismicLink): string {
   if (link.link_type === 'Document') {
     return linkResolver(link);
   } else {

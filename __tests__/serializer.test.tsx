@@ -1,22 +1,13 @@
 import React from 'react';
 import ReactDOM from 'react-dom/server';
 import { PrismicHTMLSerializer } from '../src';
-import { PrismicDocument } from '../typings/prismic';
+import { PrismicDocument, PrismicLink } from '../typings/prismic';
 import {
   serializeHyperlink,
   serializeImage,
   serializeSpan,
   serializeStandardTag,
 } from '../src/serializers';
-
-export function hrefResolver(doc: PrismicDocument<any>): string {
-  switch (doc.type) {
-    case 'some_content_type':
-      return `/your/route/${doc.uid}`;
-    default:
-      return '/';
-  }
-}
 
 export function linkResolver(doc: PrismicDocument<any>): string {
   switch (doc.type) {
@@ -29,7 +20,7 @@ export function linkResolver(doc: PrismicDocument<any>): string {
 
 describe('HTML serializer', () => {
   it('Should instantiate', () => {
-    const serializer = new PrismicHTMLSerializer({ hrefResolver, linkResolver });
+    const serializer = new PrismicHTMLSerializer({ linkResolver });
     expect(serializer).toBeInstanceOf(PrismicHTMLSerializer);
   });
 
@@ -37,7 +28,7 @@ describe('HTML serializer', () => {
     expect(() => {
       // @ts-ignore
       new PrismicHTMLSerializer();
-    }).toThrow(new Error('Both hrefResolver and linkResolver are required.'));
+    }).toThrow(new Error('linkResolver is required.'));
   });
 
   it('Should have default serializers available', () => {
@@ -50,6 +41,27 @@ describe('HTML serializer', () => {
     ]);
   });
 
+  it('Should serialize prismic links', () => {
+    const documentLink: PrismicLink = {
+      link_type: 'Document',
+      type: 'some_content_type',
+      uid: 'some-uuid',
+      url: '',
+    };
+    const unknownContentTypeLink: PrismicLink = {
+      link_type: 'Document',
+      type: 'unknown_content_type',
+      uid: 'some-uuid',
+      url: '',
+    };
+    const externalLink: PrismicLink = { url: 'https://easyblue.io' };
+    const serializer = new PrismicHTMLSerializer({ linkResolver });
+
+    expect(serializer.getURL(documentLink)).toEqual('/your/route/some-uuid');
+    expect(serializer.getURL(unknownContentTypeLink)).toEqual('/');
+    expect(serializer.getURL(externalLink)).toEqual('https://easyblue.io');
+  });
+
   it('Should serialize hyperlinks', () => {
     const element = {
       start: 68,
@@ -57,7 +69,7 @@ describe('HTML serializer', () => {
       type: 'hyperlink',
       data: {
         link_type: 'Web',
-        url: 'http://google.com',
+        url: 'https://easyblue.io',
         target: '_blank',
       },
     };
@@ -65,7 +77,7 @@ describe('HTML serializer', () => {
       serializeHyperlink(linkResolver, element, [['hyperlink content']], 0)
     );
     const expected = ReactDOM.renderToString(
-      <a href="http://google.com" target="_blank" rel="noopener">
+      <a href="https://easyblue.io" target="_blank" rel="noopener">
         hyperlink content
       </a>
     );
@@ -140,7 +152,7 @@ describe('HTML serializer', () => {
   });
 
   it('Should serialize a richtext', () => {
-    const serializer = new PrismicHTMLSerializer({ hrefResolver, linkResolver });
+    const serializer = new PrismicHTMLSerializer({ linkResolver });
     const richText: any = [
       { type: 'heading2', text: 'Testing serialization', spans: [] },
       {
@@ -170,7 +182,6 @@ describe('HTML serializer', () => {
       return <h2 style={{ color: 'red' }}>{children}</h2>;
     }
     const serializer = new PrismicHTMLSerializer({
-      hrefResolver,
       linkResolver,
       customSerializers: {
         ['heading2']: ({ children, index }) => (

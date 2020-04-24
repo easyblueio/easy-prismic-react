@@ -1,13 +1,12 @@
 import { Fragment, ReactElement } from 'react';
 import { renderRichText, SerializeOptions, SerializeParams, TResolver } from './html';
-import { ElementTypes, PrismicElement, SearchResponse } from '../typings/prismic';
-import serializers from './serializers';
+import { ElementTypes, PrismicElement, PrismicLink, SearchResponse } from '../typings/prismic';
+import serializers, { url } from './serializers';
 import ResolvedApi, { QueryOptions } from 'prismic-javascript/d.ts/ResolvedApi';
 import Prismic from 'prismic-javascript';
 
 export type TCustomSerializers = Partial<Record<ElementTypes, (params: SerializeParams) => any>>
 export interface SerializerSetupParams {
-    hrefResolver: TResolver;
     linkResolver: TResolver;
     customSerializers?: TCustomSerializers;
 }
@@ -17,8 +16,8 @@ export class PrismicHTMLSerializer {
     public static serializers = serializers;
 
     constructor(params: SerializerSetupParams) {
-        if (!params || !params.hrefResolver || !params.linkResolver) {
-            throw new Error('Both hrefResolver and linkResolver are required.');
+        if (!params || !params.linkResolver) {
+            throw new Error('linkResolver is required.');
         }
         this.params = params;
     }
@@ -33,6 +32,10 @@ export class PrismicHTMLSerializer {
             options,
             context
         );
+    }
+
+    getURL(prismicLink: PrismicLink): string {
+        return url(this.params.linkResolver, prismicLink);
     }
 }
 
