@@ -22,7 +22,7 @@ export class PrismicHTMLSerializer {
         this.params = params;
     }
 
-    renderRichText(richText: PrismicElement[], Component: any = Fragment, componentProps = {}, options: SerializeOptions = {}, context?: any): ReactElement {
+    public renderRichText(richText: PrismicElement[], Component: any = Fragment, componentProps = {}, options: SerializeOptions = {}, context?: any): ReactElement {
         return renderRichText(
             this.params.linkResolver,
             this.params.customSerializers,
@@ -34,7 +34,7 @@ export class PrismicHTMLSerializer {
         );
     }
 
-    getURL(prismicLink: PrismicLink): string {
+    public getURL(prismicLink: PrismicLink): string {
         return url(this.params.linkResolver, prismicLink);
     }
 }
