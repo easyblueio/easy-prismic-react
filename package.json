@@ -1,6 +1,6 @@
 {
-  "name": "toast-easy-prismic-react",
-  "version": "1.0.3",
+  "name": "easy-prismic-react",
+  "version": "1.0.0",
   "description": "Render and fetch prismic data with ease ",
   "main": "./dist/src/index.js",
   "scripts": {
@@ -8,7 +8,10 @@
     "build:watch": "tsc --watch",
     "format": "prettier --write ./**/**/*.{tsx,ts} && eslint -c .eslintrc.js --fix --ext .tsx,.ts .",
     "lint": "eslint -c .eslintrc.js --ext .tsx,.ts .",
-    "test": "echo \"Error: no test specified\" && exit 0"
+    "test": "jest",
+    "test:watch": "jest --watch",
+    "test:coverage": "jest --coverage",
+    "make-badges": "node_modules/.bin/jest-badges-readme"
   },
   "repository": {
     "type": "git",
@@ -28,7 +31,11 @@
     "url": "https://github.com/easyblueio/easy-prismic-react/issues"
   },
   "homepage": "https://github.com/easyblueio/easy-prismic-react#readme",
+  "peerDependencies": {
+    "react": ">=16.0.0"
+  },
   "devDependencies": {
+    "@olavoparno/jest-badges-readme": "^1.4.1",
     "@types/jest": "^25.2.1",
     "@types/react": "^16.9.34",
     "@typescript-eslint/eslint-plugin": "^2.28.0",
@@ -37,12 +44,28 @@
     "dtslint": "^3.4.1",
     "eslint": "^6.8.0",
     "eslint-plugin-react": "^7.19.0",
-    "jest": "^25.3.0",
-    "prettier": "^2.0.4",
+    "husky": "^4.2.5",
+    "jest": "^25.4.0",
+    "lint-staged": "^10.1.7",
+    "prettier": "^2.0.5",
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1",
+    "ts-jest": "^25.4.0",
     "typescript": "^3.8.3"
   },
   "dependencies": {
     "prismic-javascript": "^2.7.1",
     "prismic-richtext": "^1.0.3"
+  },
+  "lint-staged": {
+    "*.{ts,tsx}": [
+      "yarn format",
+      "git add"
+    ]
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged && yarn test:coverage && yarn make-badges && git add README.md"
+    }
   }
 }

@@ -26,6 +26,7 @@ module.exports = {
     // Typescript
     '@typescript-eslint/camelcase': 0,
     '@typescript-eslint/no-explicit-any': 0,
+    '@typescript-eslint/ban-ts-ignore': 0,
     '@typescript-eslint/explicit-function-return-type': [
       'error',
       {
@@ -36,7 +37,8 @@ module.exports = {
     'react/prop-types': 0,
     'react/react-in-jsx-scope': 0,
     'react/display-name': 0,
-    'react/no-unescaped-entities': 0
+    'react/no-unescaped-entities': 0,
+    'react/jsx-no-target-blank': 0
   },
   settings: {
     react: {
