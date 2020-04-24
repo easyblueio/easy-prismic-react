@@ -8,7 +8,9 @@
     "build:watch": "tsc --watch",
     "format": "prettier --write ./**/**/*.{tsx,ts} && eslint -c .eslintrc.js --fix --ext .tsx,.ts .",
     "lint": "eslint -c .eslintrc.js --ext .tsx,.ts .",
-    "test": "echo \"Error: no test specified\" && exit 0"
+    "test": "jest",
+    "test:watch": "jest --watch",
+    "test:coverage": "jest --coverage"
   },
   "repository": {
     "type": "git",
@@ -40,12 +42,29 @@
     "dtslint": "^3.4.1",
     "eslint": "^6.8.0",
     "eslint-plugin-react": "^7.19.0",
-    "jest": "^25.3.0",
-    "prettier": "^2.0.4",
+    "husky": "^4.2.5",
+    "jest": "^25.4.0",
+    "lint-staged": "^10.1.7",
+    "prettier": "^2.0.5",
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1",
+    "ts-jest": "^25.4.0",
     "typescript": "^3.8.3"
   },
   "dependencies": {
     "prismic-javascript": "^2.7.1",
     "prismic-richtext": "^1.0.3"
+  },
+  "lint-staged": {
+    "*.{ts,tsx}": [
+      "yarn format",
+      "git add"
+    ]
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
   }
 }
+
