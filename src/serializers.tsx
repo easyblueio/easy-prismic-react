@@ -10,7 +10,7 @@ export function url(linkResolver, link: PrismicLink): string {
 }
 
 function propsWithUniqueKey(props, key): Record<string, any> {
-  return Object.assign(props || {}, { key });
+  return Object.assign(props, { key });
 }
 
 export const serializeHyperlink = (linkResolver, element, children, key): React.ReactElement => {
